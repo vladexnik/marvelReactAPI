@@ -8,14 +8,12 @@ import PropTypes from 'prop-types'
 
 
 const CharList =(props)=>{
-    // constructor(props){
-    //     super(props);
-    // }
+   
     const [charList, setCharList]=useState([])
     const [loading, setLoading]=useState(true);
     const [error,setError]=useState(false);
-    const [newItemLoading,setNewItemLoading]=useState(false)
-    const [offset,setOffset]=useState(1540)
+    const [newItemLoading,setNewItemLoading]=useState(false);
+    const [offset,setOffset]=useState(200);
     const [charEnded,setCharEnded]=useState(false);
 
 
@@ -49,10 +47,10 @@ const CharList =(props)=>{
 
         console.log('update');
         setCharList(charList=> [...charList, ...newCharList]); // важно что было в предыд charList
-        setLoading(false)
-        setNewItemLoading(false)
+        setLoading(loading=>false)
+        setNewItemLoading(newItemLoading=> false)
         setOffset(offset=> offset+9)
-        setCharEnded(ended)
+        setCharEnded(charEnded=>ended)
     } 
     // ({}) - возвр-ем объект из этой функции
 ///////
@@ -72,7 +70,7 @@ const CharList =(props)=>{
         // и не факт, что мы выиграем по оптимизации за счет бОльшего кол-ва элементов
 
         // По возможности, не злоупотребляйте рефами, только в крайних случаях
-       // itemRefs.current.forEach(item => item.classList.remove('char__item_selected'));
+        itemRefs.current.forEach(item => item.classList.remove('char__item_selected'));
         itemRefs.current[id].classList.add('char__item_selected');
         itemRefs.current[id].focus();
     }
@@ -87,14 +85,16 @@ const CharList =(props)=>{
             return (
                 <li 
                     className="char__item"
+                    tabIndex={0}
                     ref={el=> itemRefs.current[i]=el}
                     key={item.id}
-                    onClick={()=>props.onCharacterSelected(item.id)}
+                    onClick={()=>{props.onCharacterSelected(item.id); focusOnItem(i); }}
                     onKeyDown={(e)=>{
                         if(e.key===' ' || e.key==='Enter'){
                             props.onCharacterSelected(item.id);
                             focusOnItem(i);
                         }
+                      
                     }}>
                         <img src={item.thumbnail} alt={item.name} style={imgStyle}/>
                         <div className="char__name">{item.name}</div>
@@ -119,7 +119,7 @@ const CharList =(props)=>{
                 {spinn}
                 {content}
                 <button 
-                onClick={()=>{onRequest(offset)}} 
+                onClick={()=>onRequest(offset)}
                 className="button button__main button__long"
                 disabled={newItemLoading}
                 style={{'display': charEnded ? 'none' : 'block' }}>

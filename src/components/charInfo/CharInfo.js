@@ -1,6 +1,5 @@
 import './charInfo.scss';
-import thor from '../../resources/img/thor.jpeg';
-import { Component } from 'react';
+import {useState,useEffect } from 'react';
 import MarvelService from '../../services/service';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
@@ -8,25 +7,22 @@ import Skeleton from '../skeleton/Skeleton'
 import PropTypes from 'prop-types'
 
 
-class CharInfo extends Component{
+const CharInfo=(props)=>{
 
-    state={
-        char: null, // если налл-скелетон
-        loading: false,
-        error: false
-    }
+    const [char,setChar]=useState(null);
+    const [loading,setLoading]=useState(false);
+    const [error,setError]=useState(false);
 
-    marvelService=new MarvelService();
+    const marvelService=new MarvelService();
 
-    componentDidMount(){
-        this.updateChar();
-    }
 
-    componentDidUpdate(prevProps,prevState){
-        if(this.props.characterId!== prevProps.characterId){
-            this.updateChar();
-        }
-    }
+    useEffect(()=>{
+        updateChar()
+    },[props.characterId])
+
+    
+
+
 
     // componentDidCatch(error,info){
     //     console.log(error, info);
@@ -35,45 +31,38 @@ class CharInfo extends Component{
     //     });
     // }
 
-    updateChar=()=>{
-        const {characterId}=this.props;
+    const updateChar=()=>{
+        const {characterId}=props;
             if(!characterId){
                 return;
             }
-            this.onCharLoading();
+            onCharLoading();
 
-            this.marvelService
+            marvelService
                 .getCharacter(characterId)
-                .then(this.onCharLoaded)
-                .catch(this.onError);
+                .then(onCharLoaded)
+                .catch(onError);
         
         // this.foo.bar=0;
             
     }
 
-    onCharLoaded=(char)=>{
+    const onCharLoaded=(char)=>{
         console.log('update');
-        this.setState({
-            char,
-            loading: false
-        })
+        setLoading(false);
+        setChar(char);
     }
 
-    onCharLoading=()=>{
-        this.setState({
-            loading: true
-        })
+    const onCharLoading=()=>{
+        setLoading(true);
     }
 
-    onError=()=>{
-        this.setState({
-            loading: false,
-            error: true
-        })
+    const onError=()=>{
+       setLoading(false);
+       setError(true);
     }
 
-   render(){
-    const {char,loading,error}=this.state;
+    
 
     const skeleton = char || loading || error ? null : <Skeleton/>;
     const errorMess=error ? <ErrorMessage/> : null;
@@ -88,7 +77,7 @@ class CharInfo extends Component{
         {content}
         </div>
     )
-   }
+   
 }
 
 
@@ -154,8 +143,8 @@ const View=({char})=>{
 }
 
 
-CharInfo.propTypes={
-    characterId: PropTypes.func.isRequired
-}
+// CharInfo.propTypes={
+//     characterId: PropTypes.func.isRequired
+// }
 
 export default CharInfo;
