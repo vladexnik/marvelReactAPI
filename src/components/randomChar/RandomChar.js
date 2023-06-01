@@ -2,63 +2,53 @@ import {Component, useEffect, useState} from 'react';
 
 import './randomChar.scss';
 import mjolnir from '../../resources/img/mjolnir.png';
-import MarvelService from '../../services/service';
+import useMarvelService from '../../services/service';
 import Spinner from '../spinner/Spinner'
 import ErrorMessage from '../errorMessage/ErrorMessage'
 
 const RandomChar =()=> {
    
 
-    const [person,setPerson]=useState({});
-    const [loading,setLoading]=useState(true);
-    const [error,setError]=useState(false);
-  
+    const [person,setPerson]=useState({}); // null
+    // const [loading,setLoading]=useState(true);
+    // const [error,setError]=useState(false); // не нужно уже
+    // const marvelService=new MarvelService();
 
-    const marvelService=new MarvelService();
+    const {loading,error,getCharacter, clearError}=useMarvelService();
 
     useEffect(()=>{
         updateChar();
-        const timerId=setInterval(updateChar,5000);
+        // const timerId=setInterval(updateChar,5000);
 
-        return ()=> {
-            clearInterval(timerId);
-        }
-    },[])
-
-    // componentDidMount(){
-    //     this.updateChar();
-    //     // this.timerID=setInterval(this.updateChar,3000);
+        // return 
+        //     clearInterval(timerId);
         
-    //     console.log('mount')
-    // }
-
-    // componentWillUnmount(){
-    //    clearInterval(this.timerID)
-    //     console.log('unmount');
-    // }
+    },[])
 
     const onCharLoaded=(person)=>{
         console.log('update');
         setPerson(person);
-        setLoading(false);
+        // setLoading(false);
     }
 
-    const onCharLoading=()=>{
-        setLoading(true);
-    }
+    // const onCharLoading=()=>{
+    //     setLoading(true);
+    // }
 
-    const onError=()=>{
-        setLoading(false);
-        setError(true);     
-    }
+    // const onError=()=>{
+    //     setLoading(false);
+    //     setError(true);     
+    // }
 
     const updateChar=()=>{
+        clearError();
         const id=Math.floor(Math.random()*(1011400-1011000)+1011000);
-        onCharLoading();
-        marvelService
-            .getCharacter(id)
+        // onCharLoading();
+        // marvelService
+        getCharacter(id)
             .then(onCharLoaded)
-            .catch(onError)
+
+            // .catch(onError)
             // .then(res=>{
             //     this.setState(res)
             // })
