@@ -35,6 +35,22 @@ const useMarvelService=()=> {
             return _transformCharacter(res.data.results[0]);
         }
 
+        const getAllComics=async (offset='33')=>{
+            const res=await request(`${_apiBase}comics?limit=9&offset=${offset}&${_apiKey}`);
+            return res.data.results.map(_transformComics);
+        }
+
+        const _transformComics=(comics)=>{
+            return {
+                id: comics.id,
+                title: comics.title,
+                description: comics.description,
+                price: comics.prices[0].price,
+                thumbnail: comics.thumbnail.path + '.' + comics.thumbnail.extension,
+                homepage: comics.urls[0].url
+            }
+        }
+
         // const getCharacterApi=()=>{
         //     return request('https://gateway.marvel.com:443/v1/public/characters?limit=9&offset=291&apikey=ee08e659fe8dbd136caf78ed92338ca2')
         // }
@@ -59,9 +75,13 @@ const useMarvelService=()=> {
         }
 
         return {
-            loading, error, clearError, getAllCharacters, getCharacter
+            loading, error, clearError, getAllCharacters, getCharacter, getAllComics
         }
 }
+
+    
+
+
 // export {postData};
 // export {getResource}
 
