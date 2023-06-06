@@ -48,6 +48,7 @@ const CharList =(props)=>{
     // ({}) - возвр-ем объект из этой функции
 ///////
 
+    console.log('CharList!');
     const itemRefs=useRef([]);
 
     const focusOnItem = (id) => {
