@@ -1,50 +1,42 @@
 
 import AppHeader from "../appHeader/AppHeader";
-import RandomChar from "../randomChar/RandomChar";
-import CharList from "../charList/CharList";
-import CharInfo from "../charInfo/CharInfo";
-import AppBanner from "../../components/appBanner/AppBanner"
-import decoration from '../../resources/img/vision.png';
-import { useState } from "react";
-import ErrorBoundary from "../errorBoundary/ErrorBoundary";
-import ComicsList from '../comicsList/ComicsList';
+// import RandomChar from "../randomChar/RandomChar";
+// import CharList from "../charList/CharList";
+// import CharInfo from "../charInfo/CharInfo";
+// import AppBanner from "../../components/appBanner/AppBanner"
+// import decoration from '../../resources/img/vision.png';
+// import { useState } from "react";
+// import ErrorBoundary from "../errorBoundary/ErrorBoundary";
+// import ComicsList from '../comicsList/ComicsList';
+
 // switch чтоб не повторять то что в Route
 
-import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
-
+import { BrowserRouter as Router, Route, Switch,Routes} from "react-router-dom";
+import MainPage from "../pages/MainPage";
+import ComicsPage from "../pages/ComicsPage";
+import Page404 from "../pages/404";
 
 const App=()=> {
 
-    const[selectedCharacter, setCharacter]=useState(null);
-
-    const onCharacterSelected=(id)=>{
-       setCharacter(id);
-    }
+    
     return (
         <Router>
             <div className="app">
                 <AppHeader/>
                 <main>
-                    <Switch> 
-                        <Route exact path="/">
-                        <RandomChar/>
-                        <div className="char__content">
-                            <CharList onCharacterSelected={onCharacterSelected}/>
-                            <ErrorBoundary>
-                                <CharInfo characterId={selectedCharacter}/>
-                            </ErrorBoundary> 
-                        </div>
-                        <img className ="bg-decoration" src={decoration} alt="vision"/>
-                        </Route>
-                        <Route exact path="/comics">
-                            <AppBanner/>
-                            <ComicsList/>
-                        </Route>
-                    </Switch>
+                    <Routes> 
+                        <Route path="/" element={<MainPage/>}/>                           
+                        <Route path="/comics" element={<ComicsPage/>}/>
+                        {/* <Route path="*">
+                            <Page404/>
+                        </Route> */}
+                    </Routes>
                 </main>       
             </div>
         </Router>
     )
 }
+
+// https://reactrouter.com/en/6.12.0/components/outlet
 
 export default App;
