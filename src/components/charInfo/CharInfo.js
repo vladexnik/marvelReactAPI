@@ -19,11 +19,6 @@ const CharInfo=(props)=>{
     useEffect(()=>{
         updateChar()
     },[props.characterId])
-
-    
-
-
-
     // componentDidCatch(error,info){
     //     console.log(error, info);
     //     this.setState({
@@ -39,21 +34,14 @@ const CharInfo=(props)=>{
             }
             clearError();
             getCharacter(characterId)
-                .then(onCharLoaded)
-               
-        
-        // this.foo.bar=0;
-            
+                .then(onCharLoaded)    
+        // this.foo.bar=0;          
     }
 
     const onCharLoaded=(char)=>{
         console.log('update');
         setChar(char);
     }
-
-
-
-    
 
     const skeleton = char || loading || error ? null : <Skeleton/>;
     const errorMess=error ? <ErrorMessage/> : null;

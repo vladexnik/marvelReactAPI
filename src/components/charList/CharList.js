@@ -34,6 +34,10 @@ const CharList =(props)=>{
     // отвеч за запрос на сервер
     
     const onCharListLoaded=(newCharList)=>{
+
+        // const {logger, secondLog}=await import ('./someFunc');
+        // logger();
+
         let ended=false;
         if(newCharList.length<9) {
             ended=true;
@@ -102,6 +106,13 @@ const CharList =(props)=>{
         const errorMess=error ? <ErrorMessage/> : null;
         const spinn=loading && !newItemLoading ? <Spinner/> : null;
         // const content=!(loading || error) ? items : null;
+
+        if(loading) {
+            import ('./someFunc')
+                .then(obj=> obj.default())
+                .catch()
+        } // если экспорт не дефолтный, эксп-ся объект со св-ми
+
         return (
             <div className="char__list">
                 {errorMess}
