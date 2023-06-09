@@ -107,12 +107,6 @@ const CharList =(props)=>{
         const spinn=loading && !newItemLoading ? <Spinner/> : null;
         // const content=!(loading || error) ? items : null;
 
-        if(loading) {
-            import ('./someFunc')
-                .then(obj=> obj.default())
-                .catch()
-        } // если экспорт не дефолтный, эксп-ся объект со св-ми
-
         return (
             <div className="char__list">
                 {errorMess}
