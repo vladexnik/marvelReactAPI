@@ -5,8 +5,10 @@ import CharInfo from "../charInfo/CharInfo";
 import decoration from '../../resources/img/vision.png';
 import { useState } from "react";
 import ErrorBoundary from "../errorBoundary/ErrorBoundary";
+import CharForm from "../charForm/CharForm";
 
 // switch чтоб не повторять то что в Route
+
 
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
@@ -25,7 +27,11 @@ const MainPage=()=>{
             <CharList onCharacterSelected={onCharacterSelected}/>
             <ErrorBoundary>
                 <CharInfo characterId={selectedCharacter}/>
-            </ErrorBoundary> 
+            </ErrorBoundary>
+             
+            <ErrorBoundary>
+                <CharForm/>
+            </ErrorBoundary>
         </div>
         <img className ="bg-decoration" src={decoration} alt="vision"/>    
         </>

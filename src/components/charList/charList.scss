@@ -1,5 +1,24 @@
 @import '../../style/variables.scss';
 
+
+.my-node-enter {
+    opacity: 0;
+  }
+  
+.my-node-enter-active {
+opacity: 1;
+transition: opacity 1000ms ease-in;
+}
+
+.my-node-exit {
+opacity: 1;
+}
+
+.my-node-exit-active {
+opacity: 0;
+transition: opacity 1000ms ease-in;
+}
+
 .char {
     &__content {
         margin-top: 50px;
@@ -32,6 +51,25 @@
             box-shadow: 0 5px 20px $main-color;
             transform: translateY(-8px);
         }
+        &-enter {
+            opacity: 0;
+          }
+          
+        &-enter-active {
+        opacity: 1;
+        transition: opacity 1000ms ease-in;
+        }
+        
+        &-exit {
+        opacity: 1;
+        }
+        
+        &-exit-active {
+        opacity: 0;
+        transition: opacity 1000ms ease-in;
+        }
+        
+
     }
     &__name {
         font-weight: bold;

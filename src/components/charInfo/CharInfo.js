@@ -50,10 +50,10 @@ const CharInfo=(props)=>{
 
     return (
         <div className="char__info">
-        {skeleton}
-        {errorMess}
-        {spinn}
-        {content}
+            {skeleton}
+            {errorMess}
+            {spinn}
+            {content}
         </div>
     )
    
