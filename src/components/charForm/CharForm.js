@@ -16,7 +16,7 @@ const CharForm=()=>{
 
 
     const updateChar=(name)=>{
-        
+        clearError();
         getCharacterByName(name)
             .then(onCharLoaded)
     }
@@ -33,8 +33,11 @@ const CharForm=()=>{
     const result= !char ? null : char.length > 0 ?
         <div className="char__search-wrapper">
             <div className="char__search-success">
-                Found this char.
+                Found this char. 
             </div>
+            <Link to={`/characters/${char[0].id}`} className="button button__secondary">
+                <div className="inner">To page</div>
+            </Link>
         </div> 
         :   <div className="char__search-wrapper">  
                 <div className="char__search-error">

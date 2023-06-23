@@ -1,10 +1,9 @@
 import './singleComicPage.scss';
-import xMen from '../../resources/img/x-men.png';
 import {useParams, Link, useNavigate} from "react-router-dom";
 import {useState,useEffect } from 'react';
-import useMarvelService from '../../services/service';
-import Spinner from '../spinner/Spinner';
-import ErrorMessage from '../errorMessage/ErrorMessage';
+import useMarvelService from '../../../services/service';
+import Spinner from '../../spinner/Spinner';
+import ErrorMessage from '../../errorMessage/ErrorMessage';
 
 
 const SingleComicPage = () => {
@@ -12,7 +11,7 @@ const SingleComicPage = () => {
     const [comic,setComic]=useState(null);
     const {loading,request,error,getComic, clearError}=useMarvelService();
     
-
+    
     useEffect(()=>{
         updateComic();
     },[comicId])
@@ -56,7 +55,6 @@ const View=({comic})=>{
             </div>
             <Link to="/comics" className="single-comic__back">Back to all</Link>
             <button onClick={() => navigate(-1)}>Go back</button>
-        
         </div>
     )
 }
