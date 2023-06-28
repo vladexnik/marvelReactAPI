@@ -40,12 +40,10 @@ const SingleCharPage=()=>{
     )
 
 }
-        
-
 
 const View=({char})=>{
     const {title, description, pageCount, language, thumbnail,price}=char;
-    const navigate=useNavigate();
+    // const navigate=useNavigate();
     return (
         <div className="single-char">
             <img src={thumbnail} alt={title} className="single-char__img"/>

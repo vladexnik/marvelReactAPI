@@ -33,7 +33,7 @@ const CharForm=()=>{
     const result= !char ? null : char.length > 0 ?
         <div className="char__search-wrapper">
             <div className="char__search-success">
-                Found this char. 
+                Found this char. Visit {char[0].name} page!
             </div>
             <Link to={`/characters/${char[0].id}`} className="button button__secondary">
                 <div className="inner">To page</div>
@@ -44,6 +44,7 @@ const CharForm=()=>{
                     Not found. Try another
                 </div>
             </div>;
+    console.log(result)
 
 
     return(
@@ -60,6 +61,9 @@ const CharForm=()=>{
                                 .required('Обязательное поле')       
                 })}
 
+                // нажим на кнопку
+                // отправляемся на сервер брать данные
+                // обновляем состояние ф-ей onCharLoaded
                 onSubmit= {
                     ({charName})=>{
                         updateChar(charName);
@@ -83,6 +87,7 @@ const CharForm=()=>{
                                 <div className="inner">Find</div>
                             </button>
                         </div>
+                        <ErrorMessage component="div" className="char__search-error" name="charName" />
                 </Form>
             </Formik>
             {result}

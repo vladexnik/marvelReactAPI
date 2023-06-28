@@ -1,3 +1,5 @@
+import { Helmet } from 'react-helmet';
+
 import './singleComicPage.scss';
 import {useParams, Link, useNavigate} from "react-router-dom";
 import {useState,useEffect } from 'react';
@@ -45,6 +47,19 @@ const View=({comic})=>{
     const navigate=useNavigate();
     return (
         <div className="single-comic">
+
+            <Helmet>
+                <style type="text/css">{`
+                    body {
+                        background-color: #a100aa;
+                    }
+                `}</style>
+                <meta
+                    name="description"
+                    content={`${title} comics book`}
+                />
+                <title>{title}</title>
+            </Helmet>
             <img src={thumbnail} alt={title} className="single-comic__img"/>
             <div className="single-comic__info">
                 <h2 className="single-comic__name">{title}</h2>

@@ -8,7 +8,9 @@ import { BrowserRouter as Router, Route, Switch,Routes} from "react-router-dom";
 // import SingleComicPage from "../pages/SingleComicPage";
 import {lazy,Suspense} from 'react';
 import Spinner from "../spinner/Spinner";
-import CharForm from "../charForm/CharForm";
+
+
+
 
 
 const Page404=lazy(()=> import('../pages/404'));
@@ -29,7 +31,7 @@ const App=()=> {
                             <Route path="/" element={<MainPage/>}/>                           
                             <Route path="/comics" element={<ComicsPage/>}/>
                             <Route path="/comics/:comicId" element={<SingleComicPage/>} />
-                            <Route path="/chars/:charId" element={<SingleCharPage/>} />
+                            <Route path="/characters/:charId" element={<SingleCharPage/>} />
                             <Route path="*" element={<Page404/>} />
                         </Routes>
                     </Suspense>
