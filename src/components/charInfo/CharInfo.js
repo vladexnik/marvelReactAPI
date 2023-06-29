@@ -13,7 +13,7 @@ const CharInfo=(props)=>{
     // const [loading,setLoading]=useState(false);
     // const [error,setError]=useState(false);
 
-    const {loading, error, getCharacter, clearError}=useMarvelService();
+    const {loading, error, getCharacter, clearError, process, setProcess }=useMarvelService();
 
 
     useEffect(()=>{
@@ -34,7 +34,8 @@ const CharInfo=(props)=>{
             }
             clearError();
             getCharacter(characterId)
-                .then(onCharLoaded)    
+                .then(onCharLoaded)
+                .then(()=> setProcess('confirmed'))    
         // this.foo.bar=0;          
     }
 
@@ -43,21 +44,49 @@ const CharInfo=(props)=>{
         setChar(char);
     }
 
-    const skeleton = char || loading || error ? null : <Skeleton/>;
-    const errorMess=error ? <ErrorMessage/> : null;
-    const spinn=loading ? <Spinner/> : null;
-    const content=!( loading || error || !char) ? <View char={char}/> : null;
+
+    const setContent=(process, char)=>{
+        switch(process){
+            case 'waiting':
+                return <Skeleton/>;
+                break;
+            case 'loading':
+                return <Spinner/>;
+                break;
+            case 'confirmed':
+                return <View char={char}/>;
+                break;
+            case 'error':
+                return <ErrorMessage/>;
+                break;
+            default: 
+                throw new Error('unexpected process state');
+
+        }
+    }
+
+    // const skeleton = char || loading || error ? null : <Skeleton/>;
+    // const errorMess=error ? <ErrorMessage/> : null;
+    // const spinn=loading ? <Spinner/> : null;
+    // const content=!( loading || error || !char) ? <View char={char}/> : null;
 
     return (
         <div className="char__info">
-            {skeleton}
+            {setContent(process, char)}
+            {/* {skeleton}
             {errorMess}
             {spinn}
-            {content}
+            {content} */}
         </div>
     )
    
 }
+
+//ожидание
+//получение заказа
+//доставка
+//получение оплаты
+// finite-state machine
 
 
 const View=({char})=>{
