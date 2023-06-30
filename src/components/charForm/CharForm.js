@@ -13,8 +13,6 @@ const CharForm=()=>{
     const [char,setChar]=useState(null);
     const {loading, error, clearError, getCharacterByName}=useMarvelService();
 
-
-
     const updateChar=(name)=>{
         clearError();
         getCharacterByName(name)
@@ -83,6 +81,7 @@ const CharForm=()=>{
                             {/* <ErrorMessage className="error" name="terms" component="div"/> */}
                             <button className="button button__main"
                                 type='submit' 
+                                disabled={loading}
                             >
                                 <div className="inner">Find</div>
                             </button>

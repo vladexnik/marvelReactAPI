@@ -6,17 +6,36 @@ import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import PropTypes from 'prop-types'
 import { CSSTransition,TransitionGroup } from 'react-transition-group';
+// import  setContent from '../../utils/setContent'
+
+const setContent=(process, Component, newItemLoading)=>{
+    switch(process){
+        case 'waiting':
+            return <Spinner/>;
+            break;
+        case 'loading':
+            return newItemLoading ? <Component/> : <Spinner/>;
+            break;
+        case 'confirmed':
+            return <Component/>;
+            break;
+        case 'error':
+            return <ErrorMessage/>;
+            break;
+        default: 
+            throw new Error('unexpected process state');
+
+    }
+}
 
 const CharList =(props)=>{
    
-
-     
     const [charList, setCharList]=useState([]);
     const [newItemLoading,setNewItemLoading]=useState(false);
     const [offset,setOffset]=useState(200);
     const [charEnded,setCharEnded]=useState(false);
 
-    const {loading, error, getAllCharacters}=useMarvelService();
+    const {loading, error, getAllCharacters, process, setProcess}=useMarvelService();
 
     const marvelService= useMarvelService();
 
@@ -30,6 +49,7 @@ const CharList =(props)=>{
         initial ? setNewItemLoading(false) : setNewItemLoading(true);
         getAllCharacters(offset)
             .then(onCharListLoaded)
+            .then(()=> setProcess('confirmed'))
     }
     // отвеч за запрос на сервер
     
@@ -109,15 +129,18 @@ const CharList =(props)=>{
 
         const items=renderItems(charList);
 
-        const errorMess=error ? <ErrorMessage/> : null;
-        const spinn=loading && !newItemLoading ? <Spinner/> : null;
+        // const errorMess=error ? <ErrorMessage/> : null;
+        // const spinn=loading && !newItemLoading ? <Spinner/> : null;
+        
+        
         // const content=!(loading || error) ? items : null;
 
         return (
             <div className="char__list">
-                {errorMess}
+                {setContent(process, ()=> renderItems(charList), newItemLoading)}
+                {/* {errorMess}
                 {spinn}
-                {items}
+                {items} */}
                 <button 
                 onClick={()=>onRequest(offset)}
                 className="button button__main button__long"

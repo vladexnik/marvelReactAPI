@@ -5,6 +5,8 @@ import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import Skeleton from '../skeleton/Skeleton'
 import PropTypes from 'prop-types'
+import  setContent from '../../utils/setContent'
+
 
 
 const CharInfo=(props)=>{
@@ -45,25 +47,6 @@ const CharInfo=(props)=>{
     }
 
 
-    const setContent=(process, char)=>{
-        switch(process){
-            case 'waiting':
-                return <Skeleton/>;
-                break;
-            case 'loading':
-                return <Spinner/>;
-                break;
-            case 'confirmed':
-                return <View char={char}/>;
-                break;
-            case 'error':
-                return <ErrorMessage/>;
-                break;
-            default: 
-                throw new Error('unexpected process state');
-
-        }
-    }
 
     // const skeleton = char || loading || error ? null : <Skeleton/>;
     // const errorMess=error ? <ErrorMessage/> : null;
@@ -72,7 +55,7 @@ const CharInfo=(props)=>{
 
     return (
         <div className="char__info">
-            {setContent(process, char)}
+            {setContent(process, View, char)}
             {/* {skeleton}
             {errorMess}
             {spinn}
@@ -89,8 +72,8 @@ const CharInfo=(props)=>{
 // finite-state machine
 
 
-const View=({char})=>{
-    const {name,description,thumbnail,homepage,wiki,comics}=char;
+const View=({data})=>{
+    const {name,description,thumbnail,homepage,wiki,comics}=data;
     // if(comics.length>11){
     //     comics.slice(comics.length-9, comics.length);
     // }

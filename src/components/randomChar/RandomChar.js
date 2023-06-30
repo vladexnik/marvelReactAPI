@@ -6,6 +6,9 @@ import useMarvelService from '../../services/service';
 import Spinner from '../spinner/Spinner'
 import ErrorMessage from '../errorMessage/ErrorMessage'
 
+import  setContent from '../../utils/setContent'
+
+
 const RandomChar =()=> {
    
 
@@ -14,7 +17,7 @@ const RandomChar =()=> {
     // const [error,setError]=useState(false); // не нужно уже
     // const marvelService=new MarvelService();
 
-    const {loading,error,getCharacter, clearError}=useMarvelService();
+    const {loading,error,getCharacter, clearError, process,setProcess}=useMarvelService();
 
     useEffect(()=>{
         updateChar();
@@ -47,7 +50,7 @@ const RandomChar =()=> {
         // marvelService
         getCharacter(id)
             .then(onCharLoaded)
-
+            .then(()=> setProcess('confirmed'))
             // .catch(onError)
             // .then(res=>{
             //     this.setState(res)
@@ -56,16 +59,19 @@ const RandomChar =()=> {
 
 
 
-        const errorMess=error ? <ErrorMessage/> : null;
-        const spinn=loading ? <Spinner/> : null;
-        const content=!(loading || error) ? <View person={person}/> : null;
+        // const errorMess=error ? <ErrorMessage/> : null;
+        // const spinn=loading ? <Spinner/> : null;
+        // const content=!(loading || error) ? <View person={person}/> : null;
 
         // {loading ? <Spinner/> : <View person={person}/>}
+        
         return (
             <div className="randomchar">
-               {errorMess}
+
+                {setContent(process, View, person)}
+               {/* {errorMess}
                {spinn}
-               {content}
+               {content} */}
                 <div className="randomchar__static">
                     <p className="randomchar__title">
                         Random character for today!<br/>
@@ -84,11 +90,11 @@ const RandomChar =()=> {
     
 }
 
-const View=({person})=>{
+const View=({data})=>{
     let imgStyle={ 
         'objectFit': 'cover'
     };
-    const {name,description, thumbnail,homepage,wiki}=person;
+    const {name,description, thumbnail,homepage,wiki}=data;
     if(thumbnail==='http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg'){
         imgStyle={ 
             'objectFit': 'contain' }
